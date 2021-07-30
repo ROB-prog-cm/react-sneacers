@@ -2,10 +2,8 @@ import React, {useContext} from 'react';
 import search from "../assets/img/serch.svg";
 import esc from "../assets/img/esc.svg";
 import Card from "../components/Card";
-import AppContext from "../contex";
 
 const Home = ({
-                cartItems,
                 items,
                 searchValue,
                 setSearchValue,
@@ -14,7 +12,6 @@ const Home = ({
                 onAddToCart,
                 isLoading
               }) => {
-  const {isItemAdded} = useContext(AppContext)
   const renderItems = () => {
     const filtredItems = items.filter((item) =>
       item.title.toLowerCase().includes(searchValue))
@@ -24,7 +21,6 @@ const Home = ({
           key={index}
           onPlus={(obj) => onAddToCart(obj)}
           onFavorite={(obj) => onAddToFavorites(obj)}
-          added={isItemAdded(item.id)}
           {...item}
           loading={isLoading}
         />

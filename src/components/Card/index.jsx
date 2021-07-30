@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import onLiked from "../../assets/img/1.svg.svg";
 import Liked from "../../assets/img/liked.svg";
 import plus from "../../assets/img/plus.svg";
 import ok from '../../assets/img/ok.svg'
 import styles from './Card.module.scss'
 import ContentLoader from "react-content-loader";
+import AppContext from "../../contex";
+import {logDOM} from "@testing-library/react";
 
 const Card = ({
                 added = false,
@@ -17,11 +19,10 @@ const Card = ({
                 favorited = false,
                 loading = false
               }) => {
-  const [isAdded, setIsAdded] = useState(added)
+  const {isItemAdded} = useContext(AppContext)
   const [isFavorite, setIsFavorite] = useState(favorited)
   const onClickPlus = () => {
     onPlus({id, title, price, image})
-    setIsAdded(!isAdded)
   }
   const onClickFavorite = () => {
     onFavorite({id, title, price, image})
@@ -61,13 +62,12 @@ const Card = ({
               <img
                 className={styles.plus}
                 onClick={onClickPlus}
-                src={isAdded ? ok : plus} alt="Plus"/>
+                src={isItemAdded(id) ? ok : plus} alt="Plus"/>
             </div>
           </>
       }
     </div>
   );
 }
-;
 
 export default Card;

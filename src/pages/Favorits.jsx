@@ -11,7 +11,7 @@ const Favorits = ({}) => {
         <h1>Закладки !</h1>
       </div>
       <div className='d-flex flex-wrap'>
-        {favorites.items.map((item, index) => (
+        {favorites.map((item, index) => (
           <Card
             key={index}
             favorited={true}
@@ -22,5 +22,6 @@ const Favorits = ({}) => {
     </div>
   );
 };
+
 
 export default Favorits;
