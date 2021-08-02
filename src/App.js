@@ -16,7 +16,6 @@ function App() {
   const [cartOpened, setCartOpened] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-
     async function fetchData() {
       try {
         const [cartResponse, favoritsResponse, itemsResponse] = await Promise.all([
