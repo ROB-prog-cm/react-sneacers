@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import search from "../assets/img/serch.svg";
 import esc from "../assets/img/esc.svg";
-import Card from "../components/Card";
+import Card from "../components/Card/Cart";
 
 const Home = ({
                 items,

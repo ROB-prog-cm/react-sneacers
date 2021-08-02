@@ -1,16 +1,17 @@
-import React, {useContext, useState} from 'react';
-import esc from "../assets/img/esc.svg";
-import arrow from "../assets/img/arrow.svg";
-import shop from '../assets/img/info.jpg'
-import box from '../assets/img/box.jpg'
-import Info from "./info";
-import AppContext from "../contex";
+import React, {useState} from 'react';
+import esc from "../../assets/img/esc.svg";
+import arrow from "../../assets/img/arrow.svg";
+import shop from '../../assets/img/info.jpg'
+import box from '../../assets/img/box.jpg'
+import Info from "../info";
 import axios from "axios";
+import {useCart} from "../../hooks/useCart";
+import styles from './Drawer.module.scss'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const Drawer = ({onClose, onRemove, items = []}) => {
-  const {cartItems, setCartItems} = useContext(AppContext)
+const Drawer = ({onClose, onRemove, items = [], opened}) => {
+  const {setCartItems, cartItems, totalPrice} = useCart()
   const [isComplete, setIsCompleted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [orderId, setOrderId] = useState(null)
@@ -31,13 +32,13 @@ const Drawer = ({onClose, onRemove, items = []}) => {
       }
 
     } catch (error) {
-
+      console.error(error)
     }
     setIsLoading(false)
   }
   return (
-    <div className='overlay'>
-      <div className='drawer'>
+    <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}  `}>
+      <div className={styles.drawer}>
         <h2 className='mb-30 d-flex justify-between '>
           Корзина
           <img
@@ -47,7 +48,7 @@ const Drawer = ({onClose, onRemove, items = []}) => {
         </h2>
         {items.length > 0 ?
           <div className='d-flex flex-column flex'>
-            <div className='items'>
+            <div className='items flex'>
               {items.map((obj) => (
                 <div key={obj.id} className="cartItem d-flex align-center mb-20">
                   <div style={{backgroundImage: `url(${obj.image})`}}
@@ -67,12 +68,12 @@ const Drawer = ({onClose, onRemove, items = []}) => {
                 <li>
                   <span>Итого</span>
                   <div/>
-                  <b>22300</b>
+                  <b>{totalPrice}</b>
                 </li>
                 <li>
                   <span>Налог 5%</span>
                   <div/>
-                  <b>1000</b>
+                  <b>{(totalPrice / 100) * 5}</b>
                 </li>
               </ul>
               <button

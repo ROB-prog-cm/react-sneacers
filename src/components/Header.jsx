@@ -4,8 +4,10 @@ import icon from "../assets/img/Group.svg";
 import icon_2 from "../assets/img/Union.svg";
 import favorits from '../assets/img/favorits.svg'
 import {Link} from "react-router-dom";
+import {useCart} from "../hooks/useCart";
 
 const Header = ({onClickCart}) => {
+  const {totalPrice} = useCart()
   return (
     <header className='d-flex justify-between align-center p-40'>
       <Link to={'/'}>
@@ -20,7 +22,7 @@ const Header = ({onClickCart}) => {
       <ul className='d-flex'>
         <li onClick={onClickCart} className='mr-30 cu-p'>
           <img width={18} height={18} src={icon} alt="icon"/>
-          <span>1200 rub</span>
+          <span>{totalPrice} rub</span>
         </li>
         <li className='mr-20 cu-p'>
           <Link to={'/favorites'}>
@@ -28,7 +30,9 @@ const Header = ({onClickCart}) => {
           </Link>
         </li>
         <li>
-          <img width={18} height={18} src={icon_2} alt="icon"/>
+          <Link to={'/orders'}>
+            <img width={18} height={18} src={icon_2} alt="icon"/>
+          </Link>
         </li>
       </ul>
     </header>

@@ -6,10 +6,8 @@ import ok from '../../assets/img/ok.svg'
 import styles from './Card.module.scss'
 import ContentLoader from "react-content-loader";
 import AppContext from "../../contex";
-import {logDOM} from "@testing-library/react";
 
 const Card = ({
-                added = false,
                 id,
                 title,
                 price,
@@ -21,11 +19,13 @@ const Card = ({
               }) => {
   const {isItemAdded} = useContext(AppContext)
   const [isFavorite, setIsFavorite] = useState(favorited)
+  const obj = {id, parentId: id, title, price, image}
+
   const onClickPlus = () => {
-    onPlus({id, title, price, image})
+    onPlus(obj)
   }
   const onClickFavorite = () => {
-    onFavorite({id, title, price, image})
+    onFavorite(obj)
     setIsFavorite(!isFavorite)
   }
   return (
@@ -47,11 +47,11 @@ const Card = ({
           </ContentLoader>
           :
           <>
-            <div className={styles.favorite} onClick={onFavorite}>
+            {onFavorite && <div className={styles.favorite} onClick={onFavorite}>
               <img
                 onClick={onClickFavorite}
                 src={isFavorite ? Liked : onLiked} alt=""/>
-            </div>
+            </div>}
             <img width='100%' height={135} src={image} alt=""/>
             <h5>{title}</h5>
             <div className='d-flex justify-between align-center'>
@@ -59,10 +59,10 @@ const Card = ({
                 <span>Price:</span>
                 <b>{price} rub</b>
               </div>
-              <img
+              {onPlus && <img
                 className={styles.plus}
                 onClick={onClickPlus}
-                src={isItemAdded(id) ? ok : plus} alt="Plus"/>
+                src={isItemAdded(id) ? ok : plus} alt="Plus"/>}
             </div>
           </>
       }
